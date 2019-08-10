@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 import {buildLoginForm} from './login.js';
 import {buildSignupForm} from './signup.js';
+import {showPopularPost} from  './publicpost.js';
 export function createFront(){
     const root  = document.querySelector('#root');
     while(root.firstChild){
@@ -51,53 +52,6 @@ export function createFront(){
         buildSignupForm();
     });
 
-    //Create main for feed
-    const main = document.createElement('main');
-    main.setAttribute('role', 'main');
-
-    const ul_feed = document.createElement('ul');
-    ul_feed.setAttribute('id', 'feed');
-    ul_feed.setAttribute('data-id-feed', 'feed');
-
-    const div_feed_header = document.createElement('div');
-    div_feed_header.setAttribute('class','feed-header');
-    const h3 = document.createElement('h3');
-    h3.setAttribute('class', 'feed-title alt-text');
-    h3.innerText = "Popular posts";
-    const button_post = document.createElement('button');
-    button_post.setAttribute('class', 'button button-secondary');
-    button_post.innerText = 'Post';
-
-    div_feed_header.appendChild(h3);
-    div_feed_header.appendChild(button_post);
-
-    const li_post = document.createElement('li');
-    li_post.setAttribute('class','post');
-    li_login.setAttribute('dat-id-upvotes', '');
-
-    const div_vote = document.createElement('div');
-    div_vote.setAttribute('class', 'vote');
-    div_vote.setAttribute('dat-id-upvotes', '');
-
-    const div_content = document.createElement('div');
-    div_content.setAttribute('class', 'content');
-    const h4_id_title = document.createElement('h4');
-    h4_id_title.setAttribute('class', 'post-title alt-text');
-    h4_id_title.setAttribute('data-id-title', '');
-    const p_post_author = document.createElement('p');
-    p_post_author.setAttribute('class', 'post-author');
-    p_post_author.setAttribute('dat-id-author', '');
-
-    div_content.appendChild(h4_id_title);
-    div_content.appendChild(p_post_author);
-
-    li_post.appendChild(div_vote);
-    li_post.appendChild(div_content);
-    ul_feed.appendChild(div_feed_header);
-    ul_feed.appendChild(li_post);
-    main.appendChild(ul_feed);
-
-
     //Add to Dom
     li_input.appendChild(input);
     li_login.appendChild(login_button);
@@ -108,6 +62,7 @@ export function createFront(){
     header.appendChild(h1);
     header.appendChild(ul);
     root.appendChild(header);
-    root.appendChild(main);
+    
+    showPopularPost();
 }
 export default createFront;
