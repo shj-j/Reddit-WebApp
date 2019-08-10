@@ -4,7 +4,7 @@ export function buildLoginForm(){
     //create login Form
     const login_form = document.createElement('form');
     login_form.setAttribute('class','modal animate');
-    login_form.setAttribute('action','/action_page.php');
+    login_form.setAttribute('id','login_form');
     //create div
     const div = document.createElement('div');
     div.setAttribute('class', 'modal-content container');
@@ -35,7 +35,6 @@ export function buildLoginForm(){
     const cancel= document.createElement('button');
     cancel.innerText ='Cancel';
     cancel.setAttribute('class','button');
-    cancel.setAttribute('id','cancel_button');
 
     // append all the elements
     label_usn.appendChild(b_username);
@@ -52,8 +51,40 @@ export function buildLoginForm(){
     div.appendChild(cancel);
     login_form.appendChild(div);
     document.getElementById('root').appendChild(login_form);
-
+    login_form.addEventListener('submit' , function(e) {
+        e.preventDefault();
+    });
     cancel.addEventListener('click', function(){
         login_form.style.display = 'none';
+        // console.log(input_usn.value);
+        // console.log(input_psw.value);
+    });
+    button.addEventListener('click',function() {loginFunc(input_usn.value, input_psw.value);});
+
+}
+
+function loginFunc(u,p){
+    const url = "http://127.0.0.1:5000/auth/login";
+    const formdata = JSON.stringify({username: u, password: p});
+    console.log(formdata);
+    fetch(url,{ 
+        method: 'post',
+        body: formdata,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(res=>res.json())
+    .then(function(response){
+        console.log(response);
+        if (response.status == 200){
+            const preUrl = location.href;
+            console.log(preUrl);
+            document.getElementById("login_form").style.display = 'none';
+        }else if (response.status == 400){
+            console.log("Missing Username/Password");
+        }else if (response.status == 403){
+            console.log("Invalid Username/Password");
+        }
     });
 }
