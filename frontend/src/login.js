@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+import {userPage} from './userpage.js';
 
 export function buildLoginForm(){
     //create login Form
@@ -56,8 +57,6 @@ export function buildLoginForm(){
     });
     cancel.addEventListener('click', function(){
         login_form.style.display = 'none';
-        // console.log(input_usn.value);
-        // console.log(input_psw.value);
     });
     button.addEventListener('click',function() {loginFunc(input_usn.value, input_psw.value);});
 
@@ -74,17 +73,20 @@ function loginFunc(u,p){
             'Content-Type': 'application/json'
         },
     })
-    .then(res=>res.json())
     .then(function(response){
         console.log(response);
         if (response.status == 200){
-            const preUrl = location.href;
-            console.log(preUrl);
-            document.getElementById("login_form").style.display = 'none';
+            // const preUrl = location.href;
+            const res = response.json();
+            res.then(function(value){
+                const token = value.token;
+                // console.log(token);
+                userPage(token);
+            });
         }else if (response.status == 400){
             console.log("Missing Username/Password");
         }else if (response.status == 403){
             console.log("Invalid Username/Password");
         }
-    });
+    })
 }

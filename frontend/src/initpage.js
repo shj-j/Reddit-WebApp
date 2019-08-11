@@ -2,6 +2,7 @@
 import {buildLoginForm} from './login.js';
 import {buildSignupForm} from './signup.js';
 import {showPopularPost} from  './publicpost.js';
+
 export function createFront(){
     const root  = document.querySelector('#root');
     while(root.firstChild){

@@ -98,7 +98,6 @@ function sigupFunc(u,p,e,n){
         if (response.status == 200){
             const preUrl = location.href;
             console.log(preUrl);
-            const userUrl = preUrl + u;
             document.getElementById("signup_form").style.display = 'none';
         }else if (response.status == 400){
             console.log("Missing Username/Password");
