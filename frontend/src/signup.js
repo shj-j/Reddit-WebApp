@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-export function buildSignupForm(){
+export function buildSignupForm(apiUrl){
     //create login Form
     const signup_form = document.createElement('form');
     signup_form.setAttribute('class','modal animate');
@@ -78,12 +78,14 @@ export function buildSignupForm(){
         // console.log(input_usn.value);
         // console.log(input_psw.value);
     });
-    signup_button.addEventListener('click',function() {sigupFunc(input_usn.value, input_psw.value, input_email.value, input_name.value);});
+    signup_button.addEventListener('click',function() {
+        sigupFunc(apiUrl,input_usn.value, input_psw.value, input_email.value, input_name.value);
+    });
 
 }
 
-function sigupFunc(u,p,e,n){
-    const url = "http://127.0.0.1:5000/auth/signup";
+function sigupFunc(apiUrl,u,p,e,n){
+    const url = apiUrl+"/auth/signup";
     const formdata = JSON.stringify({username: u, password: p, email: e, name: n});
     console.log(formdata);
     fetch(url,{ 
@@ -100,8 +102,10 @@ function sigupFunc(u,p,e,n){
             console.log(preUrl);
             document.getElementById("signup_form").style.display = 'none';
         }else if (response.status == 400){
+            alert('Missing Username/Password');
             console.log("Missing Username/Password");
         }else if (response.status == 403){
+            alert('Invalid Username/Password');
             console.log("Invalid Username/Password");
         }
     });

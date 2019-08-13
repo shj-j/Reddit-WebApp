@@ -14,7 +14,7 @@
 import createFront from './initpage.js';
 function initApp(apiUrl) {
   // your app initialisation goes here
-    createFront();
+    createFront(apiUrl);
 }
 
 export default initApp;

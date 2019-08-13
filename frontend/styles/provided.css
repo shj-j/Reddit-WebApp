@@ -149,8 +149,10 @@ footer > * {
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
+  word-wrap:break-word; 
   width: 30%; /* Could be more or less, depending on screen size */
 }
+
 .modal {
   /*display: none; */
   /* Hidden by default */
@@ -180,8 +182,74 @@ footer > * {
   border: 1px solid #888;
 }
 
+.modal-comments {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  overflow: auto; /* Enable scroll if needed */
+  padding-top: 60px;
+  background-color: #fefefe;
+  left: 5%;
+  top: 15%;
+  width: 70%; 
+  height: 70%;
+  padding: 20px;
+  border: 1px solid #888;
+}
+
+.modal-profile {
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  overflow: auto; /* Enable scroll if needed */
+  padding-top: 60px;
+  background-color: #fefefe;
+  right: 5%;
+  top: 10%;
+  width: auto; 
+  height: 30%;
+  padding: 20px;
+  border: 1px solid #888;
+  font-size: 13px;
+
+}
+
+.modal-mypost {
+  background-color: #fefefe;
+  overflow: auto;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  word-wrap:break-word; 
+  width: 80%; /* Could be more or less, depending on screen size */
+  height: 70%
+}
+
+.modal-post{
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  height: 80%;
+}
+
+.long-input{
+  margin: 0;
+  padding: 0;
+  width: 80%; 
+  height: 30%;
+  word-wrap:break-word; 
+  font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.input-comment{
+  margin: 0;
+  padding: 0;
+  width: 70%; 
+  height: 60%;
+  word-wrap:break-word; 
+  font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 .close {
-  color: #aaaaaa;
+  color: #aaafff;
   float: right;
   font-size: 15px;
   font-weight: bold;
@@ -191,4 +259,18 @@ footer > * {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.like {
+  color: orange;
+  float: right;
+  size: 20px
+  font-weight: bold;
+}
+.like:hover,
+.unlike {
+  color: #aaaaaa;
+  float: right;
+  size: 20px
+  font-weight: bold;
 }

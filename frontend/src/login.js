@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 import {userPage} from './userpage.js';
 
-export function buildLoginForm(){
+export function buildLoginForm(apiUrl){
     //create login Form
     const login_form = document.createElement('form');
     login_form.setAttribute('class','modal animate');
@@ -58,12 +58,15 @@ export function buildLoginForm(){
     cancel.addEventListener('click', function(){
         login_form.style.display = 'none';
     });
-    button.addEventListener('click',function() {loginFunc(input_usn.value, input_psw.value);});
+    button.addEventListener('click',function() {
+        loginFunc(apiUrl,input_usn.value, input_psw.value);
+        login_form.style.display = 'none';
+    });
 
 }
 
-function loginFunc(u,p){
-    const url = "http://127.0.0.1:5000/auth/login";
+function loginFunc(apiUrl,u,p){
+    const url = apiUrl+"/auth/login";
     const formdata = JSON.stringify({username: u, password: p});
     console.log(formdata);
     fetch(url,{ 
@@ -81,12 +84,14 @@ function loginFunc(u,p){
             res.then(function(value){
                 const token = value.token;
                 // console.log(token);
-                userPage(token);
+                userPage(apiUrl,token, u);
             });
         }else if (response.status == 400){
+            alert('Missing Username/Password');
             console.log("Missing Username/Password");
         }else if (response.status == 403){
+            alert('Invalid Username/Password');
             console.log("Invalid Username/Password");
         }
-    })
+    });
 }
