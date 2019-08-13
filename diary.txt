@@ -1,1 +1,6 @@
-25/07/19     18:00   18:15   put the first real entry in diary.txt (delete this line!)
+8.11	20:30	23:00	coding/debuge	implement the missing part for part0&1 part2
+8.11	0:10	3:15	coding	implement level2 first 2
+8.12	16£º00	17:00	coding	Finished profile
+8.12	19:00	0:00	coding/debuge	Fixed existed problem implement rest of level 2
+8.13	11£º00	17£º19	coding/debuge	Finished comments, user pages, follow, delete post in level3
+8.13	19£º01	20£º20	coding/debuge/dairy/comment	finished most level0-level2 except pagination and half level3
