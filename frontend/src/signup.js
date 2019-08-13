@@ -86,8 +86,11 @@ export function buildSignupForm(apiUrl){
 
 function sigupFunc(apiUrl,u,p,e,n){
     const url = apiUrl+"/auth/signup";
+    // change data to json formate
     const formdata = JSON.stringify({username: u, password: p, email: e, name: n});
     console.log(formdata);
+
+    // connect with backend and send request
     fetch(url,{ 
         method: 'post',
         body: formdata,
@@ -97,6 +100,7 @@ function sigupFunc(apiUrl,u,p,e,n){
     })
     .then(function(response){
         console.log(response.status);
+        // show response
         if (response.status == 200){
             const preUrl = location.href;
             console.log(preUrl);
