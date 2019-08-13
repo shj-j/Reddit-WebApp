@@ -67,8 +67,10 @@ export function buildLoginForm(apiUrl){
 
 function loginFunc(apiUrl,u,p){
     const url = apiUrl+"/auth/login";
+    // change the login username, password to json format and then send request
     const formdata = JSON.stringify({username: u, password: p});
     console.log(formdata);
+    //connect with backend
     fetch(url,{ 
         method: 'post',
         body: formdata,
@@ -81,6 +83,7 @@ function loginFunc(apiUrl,u,p){
         if (response.status == 200){
             // const preUrl = location.href;
             const res = response.json();
+            // if success, show the logged user page, jump to show user page function
             res.then(function(value){
                 const token = value.token;
                 // console.log(token);
