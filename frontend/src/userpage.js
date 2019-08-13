@@ -259,6 +259,7 @@ function userInfoModal(apiUrl, token){
     const edit_button = document.createElement("i");
     edit_button.setAttribute('class', "material-icons");
     edit_button.innerText = "create";
+    //append the button to the modal
     userinfo_modal.appendChild(edit_button);
     edit_button.addEventListener('click', function(){
         buildEditProfileForm(apiUrl,token);
@@ -273,7 +274,8 @@ function userInfoModal(apiUrl, token){
         }
     })
     .then(res=>res.json())
-    .then(function(info){        
+    .then(function(info){  
+        // Get the result and then append the result to all the object      
         const p_id= document.createElement('p');
         p_id.setAttribute('id','logged_id');
         const p_usrn= document.createElement('p');
@@ -283,14 +285,22 @@ function userInfoModal(apiUrl, token){
         const p_posts_num= document.createElement('p');
         const p_followed_num= document.createElement('p');
         const p_following_num= document.createElement('p');
+        // show the user id
         p_id.innerText = "ID: " + info.id;
+        // show the infoname
         p_name.innerText = "Name: " + info.name;
+        // show the email
         p_email.innerText = "Email: " + info.email;
-        p_usrn.innerText = "Username: " + info.username;        
+        // show the username
+        p_usrn.innerText = "Username: " + info.username;       
+        // show the post number  
         p_posts_num.innerText = "Posts Amounts: " + info.posts.length;
+        // show the number of the followed user
         p_followed_num.innerText = "Followers Amounts: " + info.followed_num;
+        // show the number of thefollowing bumer
         p_following_num.innerText = "Following Amounts: " + info.following.length;
 
+        //append all the objects to the modal to make sure it can show on the website
         userinfo_modal.appendChild(p_id);
         userinfo_modal.appendChild(p_name);
         userinfo_modal.appendChild(p_email);
@@ -302,6 +312,7 @@ function userInfoModal(apiUrl, token){
     // when click the close, hide the div(userinfo_modal)
     root.appendChild(userinfo_modal);
     userinfo_modal.style.display = 'none';
+    // click the close icon, then hide the modal
     span.addEventListener('click', function(){
         userinfo_modal.style.display = 'none';
     });
@@ -309,6 +320,7 @@ function userInfoModal(apiUrl, token){
 
 function putUpvote(apiUrl,upvote,token, id){
     const url = apiUrl+"/post/vote?id="+id;
+    // do the fetch, check the upvote icon status, if it's like already then unlike, delete the upvote
     if (upvote.className == "material-icons like"){
         console.log(id);
         console.log(token);
@@ -319,9 +331,11 @@ function putUpvote(apiUrl,upvote,token, id){
                 id: id
             }
         });
+        // change the icon style to unlike style
         upvote.setAttribute('class', 'material-icons unlike');
         console.log('unlike unlike unlike');
     }else{
+        // do the fetch, check the upvote icon status, if it's like already then unlike, put the upvote request
         console.log(id);
         console.log(token);
         fetch(url, {
@@ -337,6 +351,7 @@ function putUpvote(apiUrl,upvote,token, id){
 }
 
 function buildEditProfileForm(apiUrl,token){
+    // build a form
     const editprofile_form = document.createElement('form');
     editprofile_form.setAttribute('class','modal animate');
     editprofile_form.setAttribute('id','editprofile_form');
@@ -348,6 +363,7 @@ function buildEditProfileForm(apiUrl,token){
     const b_password = document.createElement('b');
     b_password.innerText = 'Password: ';
     const input_psw = document.createElement('input');
+    // show the input content in the field
     input_psw.setAttribute('placeholder','Please input a Password');
     input_psw.setAttribute('name','password');
 
@@ -373,6 +389,7 @@ function buildEditProfileForm(apiUrl,token){
     cancel.innerText ='Cancel';
     cancel.setAttribute('class','button');
 
+    //append all the object to div
     div.appendChild(b_password);
     div.appendChild(input_psw);
     div.appendChild(document.createElement('br'));
@@ -391,17 +408,21 @@ function buildEditProfileForm(apiUrl,token){
     div.appendChild(cancel);
 
     editprofile_form.appendChild(div);
+    // 
     document.getElementById('root').appendChild(editprofile_form);
     editprofile_form.addEventListener('submit' , function(e) {
         e.preventDefault();
     });
+    // click the cancel button then hide the form
     cancel.addEventListener('click', function(){
         editprofile_form.style.display = 'none';
         // console.log(input_usn.value);
         // console.log(input_psw.value);
     });
+    // click the edit icon 
     edit_button.addEventListener('click',function() {
         const url = apiUrl+"/user";
+        // get email, name, password input value then change it to json format
         const formdata = JSON.stringify({email: input_email.value, name: input_name.value,password: input_psw.value});
         fetch(url, {
             method: 'PUT',
@@ -411,6 +432,7 @@ function buildEditProfileForm(apiUrl,token){
             },
             body: formdata
         }).then(function(response){
+            // if success, then hide the form, and then give the alert
             console.log(response.status);
             if (response.status == 200){
                 document.getElementById("editprofile_form").style.display = 'none';
@@ -426,10 +448,11 @@ function buildEditProfileForm(apiUrl,token){
 }
 
 function buildViewPostForm(apiUrl,token){
+    // build the form
     const viewpost_form = document.createElement('form');
     viewpost_form.setAttribute('class','modal animate');
     viewpost_form.setAttribute('id','viewpost_form');
-    //create div
+    //create div container
     const div = document.createElement('div');
     div.setAttribute('class', 'modal-mypost container');
     div.setAttribute('id','view post form');
@@ -460,16 +483,19 @@ function buildViewPostForm(apiUrl,token){
                 }
             }).then(res=>res.json())
             .then(function(post){
-
+                // ceate the remove the button icon
                 const remove_button = document.createElement('i');
                 remove_button.setAttribute('class', 'material-icons like');
                 remove_button.innerText = "remove";
+                //append the remove icon to div
                 div.appendChild(remove_button);
                 div.appendChild(document.createElement('br'));
                 //create the post and show on the div
+                // create the place to show the post
                 createPost(div,post.meta.author, post.meta.published, post.image, post.meta.upvotes.length, post.title, 
                             post.text, post.comments.length, post.meta.subseddit);
-
+                // set remove button icon click function,
+                // if click the icon, delet the post
                 remove_button.addEventListener('click', function(){
                     fetch(apiUrl+"/post/?id="+info.posts[i], {
                         method: "DELETE",
@@ -481,20 +507,23 @@ function buildViewPostForm(apiUrl,token){
                     }).then(res=>alert(res.status));
                 });
             });
+            //append the form 
             viewpost_form.appendChild(div);
         }
     });
+    //append this form to root
     root.appendChild(viewpost_form);
+    // when you clickt the close icon then hide the form
     span.addEventListener('click', function(){
         viewpost_form.style.display = 'none';
     });
 }
 
 function buildAddCommentForm(apiUrl,token,id){
+    // build the form
     const addcomment_form = document.createElement('form');
     addcomment_form.setAttribute('class','modal animate');
     addcomment_form.setAttribute('id','addcomment_form');
-    //create div
     //create div
     const div = document.createElement('div');
     div.setAttribute('class', 'modal-comments container');
@@ -520,22 +549,28 @@ function buildAddCommentForm(apiUrl,token,id){
     comment_label.appendChild(b_comments);
     comment_label.appendChild(document.createElement('br'));
     comment_label.appendChild(input_comment);
+    // append all object to div container
     div.appendChild(comment_label);    
     div.appendChild(document.createElement('br'));
     div.appendChild(document.createElement('br'));
     div.appendChild(submit);
     div.appendChild(cancel);
+    // append container to form
     addcomment_form.appendChild(div);
+    // show this form to root
     root.appendChild(addcomment_form);
 
+    // make sure form can answer click
     addcomment_form.addEventListener('submit' , function(e) {
         e.preventDefault();
     });
-
+    // hide the form when click the cancel
     cancel.addEventListener('click', function(){
         addcomment_form.style.display = 'none';
     });
     console.log("heere is id : "+id);
+
+    // submit the comment to this post when click the submit icon
     submit.addEventListener('click', function(){
         const url = apiUrl+"/post/comment?id="+id;
         const formdata = JSON.stringify({comment: input_comment.value});
@@ -548,14 +583,17 @@ function buildAddCommentForm(apiUrl,token,id){
             },
             body:formdata,
         }).then(res => alert(res.status));
+        // before click the comment button, don't show the form
         addcomment_form.style.display = 'none';
     });
 }
 
 function followUser(apiUrl,follow_button, token, username){
-
     var url = apiUrl+"/user/follow?username="+username;
-    if(follow_button.innerText == "person_add"){        
+    // check if the logged user followed this user
+    if(follow_button.innerText == "person_add"){   
+        // connect with backend     
+        // if is not follow, then send follow request
         fetch(url, {
             method: 'PUT',
             headers:{
@@ -563,6 +601,7 @@ function followUser(apiUrl,follow_button, token, username){
                 'Content-Type': 'application/json',
             }
         }).then(function(response){
+            // show the result of the response
             if (response.status == 200){
                 alert('successed to follow this user');
             }else if (response.status == 400){
@@ -573,9 +612,11 @@ function followUser(apiUrl,follow_button, token, username){
                 console.log("Malformed Request");
             }
         });
+        // then change the icon style to followed
         follow_button.innerText = "person";
     }else{
         url = apiUrl+"/user/unfollow?username="+username;
+        // if user followed user then put unfollow request 
         fetch(url, {
             method: 'PUT',
             headers:{
@@ -593,6 +634,7 @@ function followUser(apiUrl,follow_button, token, username){
                 console.log("Malformed Request");
             }
         });
+        //then change icon style to unfollowed
         follow_button.innerText = "person_add";
     }
 }

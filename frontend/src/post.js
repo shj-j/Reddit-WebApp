@@ -54,46 +54,59 @@ export function buildPostForm(apiUrl,token){
     cancel.setAttribute('class','button');
 
     // append all the elements
+    // append  b-tile to  label_title
     label_title.appendChild(b_title);
+    // then append label and input field to div
     div.appendChild(label_title);
     div.appendChild(input_title);
     div.appendChild(document.createElement('br'));
     div.appendChild(document.createElement('br'));
 
+    // append  b-text to label_title
     label_text.appendChild(b_text);
+    // then append label and input field to div
     div.appendChild(label_text);
     div.appendChild(input_text);
     div.appendChild(document.createElement('br'));
     div.appendChild(document.createElement('br'));
 
+    // append  b-subseddit to label_subseddit
     label_subseddit.appendChild(b_subseddit);
+    // then append label and input field to div
     div.appendChild(label_subseddit);
     div.appendChild(input_subseddit);
     div.appendChild(document.createElement('br'));
     div.appendChild(document.createElement('br'));
 
     label_image.appendChild(b_image);
+    //  append image label and input field to div
     div.appendChild(label_image);
     div.appendChild(input_image);
     div.appendChild(document.createElement('br'));
     div.appendChild(document.createElement('br'));
 
+    // append 2 button to div
     div.appendChild(submit);
     div.appendChild(cancel);
+    //append div to form and append form to root
     post_form.appendChild(div);
     root.appendChild(post_form);
+    // make sure form can reponse the click
     post_form.addEventListener('submit' , function(e) {
         e.preventDefault();
     });
+    // click cancel, hide the form
     cancel.addEventListener('click', function(){
         post_form.style.display = 'none';
     });
+    // click submit, do the post punction, which send the post content to the database.
     submit.addEventListener('click',function() {postFunc(apiUrl,token, input_title.value, input_text.value, input_subseddit.value, input_image.value);});
 }
 
 function postFunc(apiUrl,token, title,text,subseddit,image){
     const url =apiUrl+ "/post/";
-    console.log(image);
+    // console.log(image);
+    //check if image is null, if is null, donnot send image info to backend
     var formdata = {};
     if (image != ''){
         formdata = JSON.stringify({title: title, text: text, subseddit: subseddit, image: image});
@@ -101,16 +114,17 @@ function postFunc(apiUrl,token, title,text,subseddit,image){
         formdata = JSON.stringify({title: title, text: text, subseddit: subseddit});
     }
     console.log(formdata);
+    // post new post to backend
     fetch(url,{ 
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
             Authorization : 'Token ' + token
         },
-
         body: formdata,
     })
     .then(function(response){
+        // check the response for the post result
         console.log(response.status);
         if (response.status == 200){
             document.getElementById("post_form").style.display = 'none';
